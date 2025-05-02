@@ -29,6 +29,10 @@ if (!defined("LAGOON_VERSION")) {
   define("LAGOON_VERSION", "1");
 }
 
+if(getenv('AMAZEE_AI_AI_AUTOMATOR_ADVANCED_MODE_ENABLED')) {
+  $settings['ai_automator_advanced_mode_enabled'] = TRUE;
+}
+
 // Lagoon database connection.
 if (getenv('LAGOON')) {
   $databases['default']['default'] = [

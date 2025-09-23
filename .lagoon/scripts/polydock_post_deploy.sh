@@ -1,27 +1,27 @@
 #!/bin/sh
 
 ####################################################
-# This script gets run by Polydock as a post deploy 
+# This script gets run by Polydock as a post deploy
 # over ssh. This is NOT a Lagoon post-deploy task.
 ###################################################
 
 LOCKFILE="/app/web/sites/default/files/.polydock_post_deploy"
-APP_IMAGE_URL_DEFAULT="https://nginx.main.ai-trial-storage.us2.amazee.io/storage/dev-starter/app-data-image.tgz"
+APP_IMAGE_URL_DEFAULT="https://nginx.main.ai-trial-storage.us2.amazee.io/storage/dev-starter/app-data-image-1.1.tgz"
 POLYDOCK_APP_IMAGE_FILENAME="polydock_post_deploy_image.tgz"
 POLYDOCK_TMP="/tmp/polydock_post_deploy"
 POLYDOCK_APP_IMAGE_DB_FILENAME="/app/web/sites/default/files/polydock/db-image"
 
 mkdir -p $POLYDOCK_TMP
 
-if [ -z "POLYDOCK_APP_IMAGE_URL" ]; then 
+if [ -z "POLYDOCK_APP_IMAGE_URL" ]; then
 	export POLYDOCK_APP_IMAGE_URL=$APP_IMAGE_URL_DEFAULT
 fi;
 
 if [ ! -f "$LOCKFILE" ]; then
-  echo "This is the first time the script is running" 
+  echo "This is the first time the script is running"
   cd $POLYDOCK_TMP
   wget -O $POLYDOCK_APP_IMAGE_FILENAME -P $POLYDOCK_TMP $APP_IMAGE_URL_DEFAULT
-  
+
   echo "Extracing app image"
   tar -zxf $POLYDOCK_APP_IMAGE_FILENAME
 
@@ -34,7 +34,7 @@ if [ ! -f "$LOCKFILE" ]; then
     echo "Loading database image"
     cat $POLYDOCK_APP_IMAGE_DB_FILENAME | drush sql-cli
     echo "Database image loaded"
-  else 
+  else
     echo "There is no database image at: $POLYDOCK_APP_IMAGE_DB_FILENAME"
   fi;
 
@@ -59,7 +59,7 @@ if [ ! -f "$LOCKFILE" ]; then
     fi;
   fi;
 
-  echo "Created $LOCKFILE to ensure we don't run more than once" 
+  echo "Created $LOCKFILE to ensure we don't run more than once"
   touch $LOCKFILE
 fi;
 

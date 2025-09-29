@@ -14,7 +14,7 @@ POLYDOCK_APP_IMAGE_DB_FILENAME="/app/web/sites/default/files/polydock/db-image"
 mkdir -p $POLYDOCK_TMP
 
 if [ -z "POLYDOCK_APP_IMAGE_URL" ]; then
-	export POLYDOCK_APP_IMAGE_URL=$APP_IMAGE_URL_DEFAULT
+  export POLYDOCK_APP_IMAGE_URL=$APP_IMAGE_URL_DEFAULT
 fi;
 
 if [ ! -f "$LOCKFILE" ]; then
@@ -31,7 +31,7 @@ if [ ! -f "$LOCKFILE" ]; then
   cd /app
 
   if [ -f "$POLYDOCK_APP_IMAGE_DB_FILENAME" ]; then
-    echo "Removing collation from DB ..."                                                                                                                                                     
+    echo "Removing collation from DB ..."
     sed -i 's/COLLATE=utf8mb4_uca1400_ai_ci //g' $POLYDOCK_APP_IMAGE_DB_FILENAME
     echo "Loading database image"
     cat $POLYDOCK_APP_IMAGE_DB_FILENAME | drush sql-cli
